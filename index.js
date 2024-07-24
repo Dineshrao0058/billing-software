@@ -9,7 +9,7 @@ app.use(express.json());
 const cors = require("cors");
 app.use(cors());
 
-const productRoutes = require("./Admin/Routes/productRoute");
+// const productRoutes = require("./Admin/Routes/productRoute");
 
 port = 5000;
 URL = "mongodb://127.0.0.1:27017/billing";
