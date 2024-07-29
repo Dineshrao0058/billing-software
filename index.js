@@ -9,8 +9,7 @@ app.use(express.json());
 const cors = require("cors");
 app.use(cors());
 
-// const productRoutes = require("./Admin/Routes/productRoute");
-
+const productRoute = require("./Admin/Routes/productRoute");
 port = 5000;
 URL = "mongodb://127.0.0.1:27017/billing";
 
@@ -24,9 +23,9 @@ app.listen(port, (err) => {
 
 mongoose
   .connect(URL)
-  .then(console.log("connected"))
+  .then(console.log("Server connected"))
   .catch((err) => {
     console.log(err);
   });
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+  app.use("/products",productRoute);

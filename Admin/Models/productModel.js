@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     productWeight: {
-      type: Number,
+      type: String,
       required: true,
     },
     productPrice: {
@@ -18,7 +18,7 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     productQuantity: {
-      type: Number,
+      type: String,
       required: true,
     },
     batchNumber: {
@@ -37,9 +37,29 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    createdBY: {
+      type: String,
+    },
+    createdDate: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedBY: {
+      type: String,
+    },
+    updatedDate: {
+      type: Date,
+    },
+    productStatus: {
+      type: String,
+      default: "active",
+      enum: ["active", "inactive"],
+    },
   },
   {
     timestamps: true,
   }
 );
+
 module.exports = mongoose.model("products", productSchema);
+
