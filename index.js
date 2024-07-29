@@ -9,7 +9,10 @@ app.use(express.json());
 const cors = require("cors");
 app.use(cors());
 dotenv.config();
-const productRoute = require("./Admin/Routes/productRoute");
+const productRoute = require("./products/productRoute");
+const adminRoute = require("./Admin/adminRoutes");
+const managerRoute = require("./manager/managerRoute");
+
 port = process.env.PORT;
 url = process.env.DB_URL;
 
@@ -29,3 +32,5 @@ mongoose
   });
 
 app.use("/products", productRoute);
+app.use("/Admin", adminRoute);
+app.use("/manager", managerRoute);
