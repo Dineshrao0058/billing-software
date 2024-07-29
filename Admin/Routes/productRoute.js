@@ -9,7 +9,7 @@ let corsOptions = {
 
 // router.post("/createProduct", corsOptions, controller.createProduct);
 
- // router.put("/updateProduct/:id", corsOptions, controller.updateProduct);
+// router.put("/updateProduct/:id", corsOptions, controller.updateProduct);
 
 router.post("/addproduct", cors(corsOptions), controller.addproduct);
 

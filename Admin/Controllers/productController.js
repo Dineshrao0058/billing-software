@@ -38,23 +38,34 @@ exports.createProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = [
-    'productName', 'productCategory', 'productWeight', 'productPrice',
-    'productQuantity', 'batchNumber', 'manufacturingDate', 'expirationDate',
-    'description', 'productStatus'
+    "productName",
+    "productCategory",
+    "productWeight",
+    "productPrice",
+    "productQuantity",
+    "batchNumber",
+    "manufacturingDate",
+    "expirationDate",
+    "description",
+    "productStatus",
   ];
-  const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
 
   if (!isValidOperation) {
-    return res.status(400).send({ message: 'Invalid updates!' });
+    return res.status(400).send({ message: "Invalid updates!" });
   }
 
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
-      return res.status(404).send({ message: 'Product not found' });
+      return res.status(404).send({ message: "Product not found" });
     }
 
-    updates.forEach((update) => product[update] = req.body[update] || product[update]);
+    updates.forEach(
+      (update) => (product[update] = req.body[update] || product[update])
+    );
     if (!product.productStatus) {
       product.productStatus = "active"; // Set default value if undefined or empty
     }

@@ -1,17 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
-
+const dotenv = require("dotenv");
 // Connect to MongoDB
 const app = express();
 app.use(express.json());
 
 const cors = require("cors");
 app.use(cors());
-
+dotenv.config();
 const productRoute = require("./Admin/Routes/productRoute");
-port = 5000;
-URL = "mongodb://127.0.0.1:27017/billing";
+port = process.env.PORT;
+url = process.env.DB_URL;
 
 app.listen(port, (err) => {
   if (!err) {
@@ -22,10 +22,10 @@ app.listen(port, (err) => {
 });
 
 mongoose
-  .connect(URL)
+  .connect(url)
   .then(console.log("Server connected"))
   .catch((err) => {
     console.log(err);
   });
 
-  app.use("/products",productRoute);
+app.use("/products", productRoute);
