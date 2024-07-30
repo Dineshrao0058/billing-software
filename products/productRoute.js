@@ -17,6 +17,6 @@ router.get("/getproducts", cors(corsOptions), controller.getproducts);
 
 router.put("/updateproduct/:id", cors(corsOptions), controller.updateproduct);
 
-router.delete("/deleteproduct", cors(corsOptions), controller.deleteproduct);
+router.delete("/deleteproduct/:id", cors(corsOptions), controller.deleteproduct);
 
 module.exports = router;
