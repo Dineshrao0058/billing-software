@@ -29,6 +29,10 @@ const productSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    purchaseDate:{
+      type: Date,
+      required: true,
+    },
     expirationDate: {
       type: Date,
       required: true,
