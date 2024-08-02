@@ -7,9 +7,7 @@ let corsOptions = {
   origin: ["http://localhost:5000"],
 };
 
-// router.post("/createProduct", corsOptions, controller.createProduct);
-
-// router.put("/updateProduct/:id", corsOptions, controller.updateProduct);
+// Existing routes for other CRUD operations...
 
 router.post("/addproduct", cors(corsOptions), controller.addproduct);
 
@@ -19,4 +17,6 @@ router.put("/updateproduct/:id", cors(corsOptions), controller.updateproduct);
 
 router.delete("/deleteproduct/:id", cors(corsOptions), controller.deleteproduct);
 
+// New search route
+router.get("/search", cors(corsOptions), controller.searchProducts);
 module.exports = router;

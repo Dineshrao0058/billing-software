@@ -1,4 +1,5 @@
 const product = require("./productModel");
+
 exports.createProduct = async (req, res) => {
   try {
     const {
@@ -14,8 +15,7 @@ exports.createProduct = async (req, res) => {
       productStatus,
     } = req.body;
 
-    // Ensure productStatus is set correctly
-    const product = new product({
+    const newProduct = new product({
       productName,
       productCategory,
       productWeight,
@@ -28,8 +28,8 @@ exports.createProduct = async (req, res) => {
       productStatus: productStatus || "active",
     });
 
-    await product.save();
-    res.status(201).send(product);
+    await newProduct.save();
+    res.status(201).send(newProduct);
   } catch (error) {
     res.status(400).send({ error: error.message });
   }
@@ -67,7 +67,7 @@ exports.updateProduct = async (req, res) => {
       (update) => (product[update] = req.body[update] || product[update])
     );
     if (!product.productStatus) {
-      product.productStatus = "active"; // Set default value if undefined or empty
+      product.productStatus = "active";
     }
 
     await product.save();
@@ -119,5 +119,24 @@ exports.deleteproduct = async (req, res) => {
     res.json(deletedProduct);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+// New searchProducts method
+exports.searchProducts = async (req, res) => {
+  try {
+    const keyword = req.query.keyword;
+    if (!keyword) {
+      return res.status(400).json({ message: "Keyword is required" });
+    }
+
+    const regex = new RegExp(keyword, "i"); // case-insensitive search
+    const products = await product.find({
+      productName: { $regex: regex }
+    });
+
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
