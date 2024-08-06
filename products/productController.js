@@ -57,3 +57,22 @@ exports.deleteProduct = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// New searchProducts method
+exports.searchProducts = async (req, res) => {
+  try {
+    const keyword = req.query.keyword;
+    if (!keyword) {
+      return res.status(400).json({ message: "Keyword is required" });
+    }
+
+    const regex = new RegExp(keyword, "i"); // case-insensitive search
+    const products = await product.find({
+      productName: { $regex: regex }
+    });
+
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};

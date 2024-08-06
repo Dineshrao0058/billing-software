@@ -12,7 +12,7 @@ dotenv.config();
 const productRoute = require("./products/productRoute");
 const adminRoute = require("./Admin/adminRoutes");
 const managerRoute = require("./manager/managerRoute");
-
+const salesRoute = require("./sales/salesRoute");
 port = process.env.PORT;
 url = process.env.DB_URL;
 
@@ -34,3 +34,4 @@ mongoose
 app.use("/products", productRoute);
 app.use("/admin", adminRoute);
 app.use("/manager", managerRoute);
+app.use("/sales", salesRoute);

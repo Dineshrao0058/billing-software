@@ -12,4 +12,6 @@ router.get('/getproducts', cors(corsOptions), controller.getProducts);
 router.put('/updateproduct/:id', cors(corsOptions), controller.updateProduct);
 router.delete('/deleteproduct/:id', cors(corsOptions), controller.deleteProduct);
 
+// New search route
+router.get("/search", cors(corsOptions), controller.searchProducts);
 module.exports = router;
