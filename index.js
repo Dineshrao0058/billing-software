@@ -32,5 +32,5 @@ mongoose
   });
 
 app.use("/products", productRoute);
-app.use("/Admin", adminRoute);
+app.use("/admin", adminRoute);
 app.use("/manager", managerRoute);
