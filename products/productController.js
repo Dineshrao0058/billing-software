@@ -1,5 +1,4 @@
 const Product = require("./productModel");
-
 exports.createProduct = async (req, res) => {
   try {
     const product = new Product(req.body);
@@ -9,6 +8,7 @@ exports.createProduct = async (req, res) => {
     res.status(400).send({ error: error.message });
   }
 };
+
 exports.updateProduct = async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = [
@@ -47,21 +47,6 @@ exports.updateProduct = async (req, res) => {
     res.status(400).send({ error: error.message });
   }
 };
-// Create a new product
-exports.addProduct = async (req, res) => {
-  try {
-    const newProduct = new Product({
-      ...req.body,
-      productStatus: req.body.productStatus || "active", // Default to 'active' if not provided
-    });
-    await newProduct.save();
-    res.status(201).json(newProduct);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
-// Get all products
 exports.getProducts = async (req, res) => {
   try {
     const products = await Product.find();
@@ -71,14 +56,12 @@ exports.getProducts = async (req, res) => {
   }
 };
 
-// Update a product by ID
-
-exports.updateProduct = async (req, res) => {
+exports.updateProductById = async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true, runValidators: true } // `new: true` returns the updated document, `runValidators: true` ensures validation
+      { new: true, runValidators: true }
     );
 
     if (!updatedProduct) {
@@ -90,8 +73,6 @@ exports.updateProduct = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
-// Delete a product by ID
 exports.deleteProduct = async (req, res) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
@@ -105,14 +86,24 @@ exports.deleteProduct = async (req, res) => {
 };
 exports.searchProducts = async (req, res) => {
   try {
-    const keyword = req.query.keyword;
-    if (!keyword) {
-      return res.status(400).json({ message: "Keyword is required" });
+    const { keyword, category } = req.query;
+
+    if (!keyword && !category) {
+      return res
+        .status(400)
+        .json({ message: "Keyword or category is required" });
     }
-    const regex = new RegExp(keyword, "i"); // case-insensitive search
-    const products = await Product.find({
-      productName: { $regex: regex },
-    });
+    const searchConditions = [];
+    if (keyword) {
+      const keywordRegex = new RegExp(keyword, "i"); // case-insensitive search
+      searchConditions.push({ productName: { $regex: keywordRegex } });
+    }
+    if (category) {
+      const categoryRegex = new RegExp(category, "i"); // case-insensitive search
+      searchConditions.push({ productCategory: { $regex: categoryRegex } });
+    }
+    const products = await Product.find({ $or: searchConditions });
+
     res.status(200).json(products);
   } catch (error) {
     res.status(400).json({ error: error.message });
