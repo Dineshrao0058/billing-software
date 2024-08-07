@@ -30,7 +30,7 @@ mongoose
     console.log(err);
   });
 
-app.use("/Admin", adminRoute);
+app.use("/admin", adminRoute);
 app.use("/manager", managerRoute);
 app.use("/products", productRoute);
 app.use("/sales", salesRoute);

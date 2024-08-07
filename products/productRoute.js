@@ -1,10 +1,10 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const controller = require("./productController");
-const cors = require("cors");
+const controller = require('./productController');
+const cors = require('cors');
 
 let corsOptions = {
-  origin: ["http://localhost:5000"],
+  origin: ['http://localhost:5000'],
 };
 router.post("/addproduct", cors(corsOptions), controller.createProduct);
 router.get("/getproducts", cors(corsOptions), controller.getProducts);
