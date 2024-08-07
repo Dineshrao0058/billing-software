@@ -1,33 +1,48 @@
 const Sale = require("./salesModel");
 const Product = require("../products/productModel");
-const mongoose = require("mongoose");
+
 exports.createSale = async (req, res) => {
   try {
-    const { productId, saleQuantity, customerName, customerMobile } = req.body;
-    const product = await Product.findById(productId);
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-    if (product.productQuantity < saleQuantity) {
-      return res.status(400).json({ message: "Insufficient product quantity" });
-    }
-    const salePrice = saleQuantity * product.productPrice;
-    const sale = new Sale({
-      productId,
-      saleQuantity,
-      salePrice,
-      customerName,
-      customerMobile,
-    });
-    await sale.save();
-    product.productQuantity -= saleQuantity;
-    await product.save();
+    const saleData = req.body;
 
-    res.status(201).json(sale);
+    const sales = [];
+    for (const sale of saleData) {
+      const product = await Product.findById(sale.productId);
+      if (!product) {
+        return res
+          .status(404)
+          .json({ message: `Product with ID ${sale.productId} not found` });
+      }
+      if (product.productQuantity < sale.saleQuantity) {
+        return res
+          .status(400)
+          .json({
+            message: `Insufficient quantity for product ID ${sale.productId}`,
+          });
+      }
+
+      const newSale = new Sale({
+        productId: sale.productId,
+        saleQuantity: sale.saleQuantity,
+        salePrice: sale.salePrice,
+        customerName: sale.customerName,
+        customerMobile: sale.customerMobile,
+      });
+
+      await newSale.save();
+
+      product.productQuantity -= sale.saleQuantity;
+      await product.save();
+
+      sales.push(newSale);
+    }
+
+    res.status(201).json(sales);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 exports.getAllSales = async (req, res) => {
   try {
     const sales = await Sale.find().populate("productId");
