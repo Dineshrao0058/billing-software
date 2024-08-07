@@ -1,5 +1,4 @@
 const Product = require("./productModel");
-const Product = require("./productModel");
 
 exports.createProduct = async (req, res) => {
   try {
@@ -48,9 +47,6 @@ exports.updateProduct = async (req, res) => {
     res.status(400).send({ error: error.message });
   }
 };
-exports.addProduct = async (req, res) => {
-  try {
-    const newProduct = new Product(req.body);
 // Create a new product
 exports.addProduct = async (req, res) => {
   try {
@@ -69,8 +65,6 @@ exports.addProduct = async (req, res) => {
 exports.getProducts = async (req, res) => {
   try {
     const products = await Product.find();
-    res.json(products);
-    const products = await Product.find();
     res.status(200).json(products);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -81,8 +75,6 @@ exports.getProducts = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(
-    // Find the product by ID and update with request body
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -98,13 +90,10 @@ exports.updateProduct = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-exports.deleteProduct = async (req, res) => {
 
 // Delete a product by ID
 exports.deleteProduct = async (req, res) => {
   try {
-    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
-    if (!deletedProduct)
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
     if (!deletedProduct) {
       return res.status(404).json({ message: "Product not found" });
