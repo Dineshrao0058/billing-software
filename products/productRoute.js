@@ -15,6 +15,4 @@ router.delete(
   controller.deleteProduct
 );
 router.get("/search", cors(corsOptions), controller.searchProducts);
-router.get("/products/search", controller.searchProducts);
-
 module.exports = router;
