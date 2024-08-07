@@ -8,17 +8,12 @@ let corsOptions = {
   origin: ["http://localhost:5000"],
 };
 
-// Admin routes
-
 router.post("/addAdmin", cors(corsOptions), controller.addAdmin);
-
 router.post("/adminLogin", cors(corsOptions), controller.adminLogin);
-
 router.get(
   "/adminProfile/:id",
   cors(corsOptions),
   authenticateToken,
   controller.getAdminProfile
 );
-
 module.exports = router;

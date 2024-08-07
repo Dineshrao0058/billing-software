@@ -9,7 +9,6 @@ exports.addAdmin = async (req, res) => {
     await admin.save();
     res.status(201).json(admin);
   } catch (error) {
-    console.error(error);
     res.status(400).json({ error: "admin error" });
   }
 };
@@ -31,7 +30,6 @@ exports.adminLogin = async (req, res) => {
       res.status(401).json({ error: "Invalid Credintials" });
     }
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -44,7 +42,6 @@ exports.getAdminProfile = async (req, res) => {
     }
     res.json(admin);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };

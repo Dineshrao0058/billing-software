@@ -2,16 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const dotenv = require("dotenv");
-// Connect to MongoDB
 const app = express();
 app.use(express.json());
 
 const cors = require("cors");
 app.use(cors());
 dotenv.config();
-const productRoute = require("./products/productRoute");
 const adminRoute = require("./Admin/adminRoutes");
 const managerRoute = require("./manager/managerRoute");
+const productRoute = require("./products/productRoute");
 const salesRoute = require("./sales/salesRoute");
 port = process.env.PORT;
 url = process.env.DB_URL;
@@ -31,7 +30,7 @@ mongoose
     console.log(err);
   });
 
-app.use("/products", productRoute);
 app.use("/Admin", adminRoute);
 app.use("/manager", managerRoute);
+app.use("/products", productRoute);
 app.use("/sales", salesRoute);

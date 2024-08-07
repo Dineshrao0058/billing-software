@@ -6,17 +6,14 @@ const cors = require("cors");
 let corsOptions = {
   origin: ["http://localhost:5000"],
 };
-
-// Existing routes for other CRUD operations...
-
-router.post("/addproduct", cors(corsOptions), controller.addproduct);
-
-router.get("/getproducts", cors(corsOptions), controller.getproducts);
-
-router.put("/updateproduct/:id", cors(corsOptions), controller.updateproduct);
-
-router.delete("/deleteproduct/:id", cors(corsOptions), controller.deleteproduct);
-
-// New search route
+router.post("/addproduct", cors(corsOptions), controller.createProduct);
+router.get("/getproducts", cors(corsOptions), controller.getProducts);
+router.put("/updateproduct/:id", cors(corsOptions), controller.updateProduct);
+router.delete(
+  "/deleteproduct/:id",
+  cors(corsOptions),
+  controller.deleteProduct
+);
 router.get("/search", cors(corsOptions), controller.searchProducts);
+
 module.exports = router;
