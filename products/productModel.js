@@ -66,29 +66,23 @@ const productSchema = new mongoose.Schema(
     },
     salePercentage: {
       type: Number,
-      default: 0,
+      required: true,
     },
     gstPercentage: {
       type: Number,
-      default: 0,
+      required: true,
     },
     salePrice: {
       type: Number,
-      default: function () {
-        return this.productPrice * (1 - this.salePercentage / 100);
-      },
+      required: true,
     },
     gstAmount: {
       type: Number,
-      default: function () {
-        return this.salePrice * (this.gstPercentage / 100);
-      },
+      required: true,
     },
     totalPrice: {
       type: Number,
-      default: function () {
-        return this.salePrice + this.gstAmount;
-      },
+      required: true,
     },
   },
   {
