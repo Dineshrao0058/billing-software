@@ -17,7 +17,7 @@ url = process.env.DB_URL;
 
 app.listen(port, (err) => {
   if (!err) {
-    console.log(`Server running on port ${port}`);
+    console.log(`Server restarted on port ${port}`);
   } else {
     console.log("Error in server connection");
   }
