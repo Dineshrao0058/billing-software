@@ -12,6 +12,7 @@ const adminRoute = require("./Admin/adminRoutes");
 const managerRoute = require("./manager/managerRoute");
 const productRoute = require("./products/productRoute");
 const salesRoute = require("./sales/salesRoute");
+const purchaseRoute = require("./purchase/purchaseRoute");
 port = process.env.PORT;
 url = process.env.DB_URL;
 
@@ -34,3 +35,4 @@ app.use("/admin", adminRoute);
 app.use("/manager", managerRoute);
 app.use("/products", productRoute);
 app.use("/sales", salesRoute);
+app.use("/purchase", purchaseRoute);
