@@ -1,7 +1,12 @@
 const Product = require("./productModel");
+
 exports.createProduct = async (req, res) => {
   try {
-    const product = new Product(req.body);
+    const productData = req.body;
+    if (!productData.productStatus) { 
+      productData.productStatus = "active";
+    }
+    const product = new Product(productData);
     await product.save();
     res.status(201).json(product);
   } catch (error) {
@@ -9,44 +14,6 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-exports.updateProduct = async (req, res) => {
-  const updates = Object.keys(req.body);
-  const allowedUpdates = [
-    "productName",
-    "productCategory",
-    "productWeight",
-    "productPrice",
-    "productQuantity",
-    "batchNumber",
-    "manufacturingDate",
-    "expirationDate",
-    "description",
-    "productStatus",
-  ];
-  const isValidOperation = updates.every((update) =>
-    allowedUpdates.includes(update)
-  );
-
-  if (!isValidOperation) {
-    return res.status(400).send({ message: "Invalid updates!" });
-  }
-  try {
-    const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).send({ message: "Product not found" });
-    }
-    updates.forEach(
-      (update) => (product[update] = req.body[update] || product[update])
-    );
-    if (!product.productStatus) {
-      product.productStatus = "active";
-    }
-    await product.save();
-    res.status(200).send(product);
-  } catch (error) {
-    res.status(400).send({ error: error.message });
-  }
-};
 exports.getProducts = async (req, res) => {
   try {
     const products = await Product.find();
@@ -55,7 +22,6 @@ exports.getProducts = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
 exports.updateProductById = async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
@@ -84,6 +50,7 @@ exports.deleteProduct = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 exports.searchProducts = async (req, res) => {
   try {
     const { keyword, category } = req.query;
@@ -93,19 +60,22 @@ exports.searchProducts = async (req, res) => {
         .status(400)
         .json({ message: "Keyword or category is required" });
     }
+
     const searchConditions = [];
     if (keyword) {
-      const keywordRegex = new RegExp(keyword, "i"); // case-insensitive search
+      const keywordRegex = new RegExp(keyword, "i");
       searchConditions.push({ productName: { $regex: keywordRegex } });
     }
     if (category) {
-      const categoryRegex = new RegExp(category, "i"); // case-insensitive search
+      const categoryRegex = new RegExp(category, "i");
       searchConditions.push({ productCategory: { $regex: categoryRegex } });
     }
+
     const products = await Product.find({ $or: searchConditions });
 
     res.status(200).json(products);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error("Error searching products:", error);
+    res.status(500).json({ error: error.message });
   }
 };
