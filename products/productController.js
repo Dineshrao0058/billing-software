@@ -22,6 +22,7 @@ exports.getProducts = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 exports.updateProductById = async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
@@ -34,21 +35,12 @@ exports.updateProductById = async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    // Recalculate prices if salePercentage or gstPercentage is updated
-    if (req.body.salePercentage !== undefined || req.body.gstPercentage !== undefined) {
-      updatedProduct.salePrice = updatedProduct.productPrice * (1 - updatedProduct.salePercentage / 100);
-      updatedProduct.gstAmount = updatedProduct.salePrice * (updatedProduct.gstPercentage / 100);
-      updatedProduct.totalPrice = updatedProduct.salePrice + updatedProduct.gstAmount;
-      await updatedProduct.save();
-    }
-
     res.status(200).json(updatedProduct);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-// Delete a product by ID
 exports.deleteProduct = async (req, res) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
@@ -61,8 +53,6 @@ exports.deleteProduct = async (req, res) => {
   }
 };
 
-
-// Search products by keyword or category
 exports.searchProducts = async (req, res) => {
   try {
     const { keyword, category } = req.query;
@@ -70,7 +60,6 @@ exports.searchProducts = async (req, res) => {
     if (!keyword && !category) {
       return res.status(400).json({ message: "Keyword or category is required" });
     }
-
 
     const searchConditions = [];
     if (keyword) {
@@ -81,7 +70,6 @@ exports.searchProducts = async (req, res) => {
       const categoryRegex = new RegExp(category, "i");
       searchConditions.push({ productCategory: { $regex: categoryRegex } });
     }
-
 
     const products = await Product.find({ $or: searchConditions });
 
