@@ -12,10 +12,18 @@ router.post("/purchases", cors(corsOptions), purchaseController.createPurchase);
 
 router.get("/purchases", cors(corsOptions), purchaseController.getPurchases);
 
+// Route to get monthly purchase report
 router.get(
-  "/purchases/:month/:year",
+  "/purchases/report/monthly",
   cors(corsOptions),
-  purchaseController.getPurchasesByMonthYear
+  purchaseController.getMonthlyPurchaseReport
+);
+
+// Route to get yearly purchase report
+router.get(
+  "/purchases/report/yearly",
+  cors(corsOptions),
+  purchaseController.getYearlyPurchaseReport
 );
 
 module.exports = router;
