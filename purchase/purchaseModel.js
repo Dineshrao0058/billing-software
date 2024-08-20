@@ -13,6 +13,14 @@ const purchaseSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+    month: {
+      type: String,
+      required: true
+    },
+    year: {
+      type: Number,
+      required: true
+    }
 });
 
 module.exports = mongoose.model("Purchase", purchaseSchema);

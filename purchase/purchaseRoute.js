@@ -1,8 +1,21 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const purchaseController = require('./purchaseController');
+const purchaseController = require("./purchaseController");
+const cors = require("cors");
 
-router.post('/purchases', purchaseController.createPurchase);
-router.get('/purchases', purchaseController.getPurchases);
+const corsOptions = {
+  origin: "http://localhost:5000",
+};
+router.use(cors(corsOptions));
+
+router.post("/purchases", cors(corsOptions), purchaseController.createPurchase);
+
+router.get("/purchases", cors(corsOptions), purchaseController.getPurchases);
+
+router.get(
+  "/purchases/:month/:year",
+  cors(corsOptions),
+  purchaseController.getPurchasesByMonthYear
+);
 
 module.exports = router;
