@@ -4,7 +4,6 @@ const Product = require("../products/productModel");
 exports.createSale = async (req, res) => {
   try {
     const saleData = req.body;
-
     const sales = [];
     for (const sale of saleData) {
       const product = await Product.findById(sale.productId);

@@ -7,6 +7,8 @@ const corsOptions = {
   origin: ["http://localhost:5000"],
 };
 
+router.use(cors(corsOptions));
+
 router.post("/addproduct", cors(corsOptions), controller.createProduct);
 
 router.get("/getproduct", cors(corsOptions), controller.getProducts);

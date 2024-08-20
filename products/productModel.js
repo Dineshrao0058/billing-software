@@ -22,7 +22,7 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    productQuantity: {
+    productStock: {
       type: String,
       required: true,
     },
@@ -42,10 +42,6 @@ const productSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    description: {
-      type: String,
-      required: true,
-    },
     createdBY: {
       type: String,
     },
@@ -63,6 +59,30 @@ const productSchema = new mongoose.Schema(
       type: String,
       default: "active",
       enum: ["active", "inactive"],
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    salePercentage: {
+      type: Number,
+      required: true,
+    },
+    gstPercentage: {
+      type: Number,
+      required: true,
+    },
+    salePrice: {
+      type: Number,
+      required: true,
+    },
+    gstPrice: {
+      type: Number,
+      required: true,
+    },
+    totalPrice: {
+      type: Number,
+      required: true,
     },
   },
   {
