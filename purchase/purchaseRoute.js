@@ -25,5 +25,10 @@ router.get(
   cors(corsOptions),
   purchaseController.getYearlyPurchaseReport
 );
+router.get(
+  "/searchpurchase",
+  cors(corsOptions),
+  purchaseController.searchPurchases
+);
 
 module.exports = router;
