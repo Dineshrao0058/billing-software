@@ -5,6 +5,14 @@ const purchaseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  Mobile:{
+    type: String,
+    required: true,
+  },
+  Address:{
+    type: String,
+    required: true,
+  },
   purchaseDate: {
     type: String,
     required: true,
