@@ -115,3 +115,33 @@ exports.getYearlyPurchaseReport = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+exports.searchPurchases = async (req, res) => {
+  try {
+    const { supplierName, date } = req.query;
+
+    if (!supplierName && !date) {
+      return res
+        .status(400)
+        .json({ message: "Supplier name or date is required" });
+    }
+
+    const searchConditions = [];
+
+    if (supplierName) {
+      const supplierNameRegex = new RegExp(supplierName, "i");
+      searchConditions.push({ supplierName: { $regex: supplierNameRegex } });
+    }
+
+    if (date) {
+      const purchaseDate = new Date(date);
+      searchConditions.push({ purchaseDate: { $eq: purchaseDate } });
+    }
+
+    const purchases = await Purchase.find({ $or: searchConditions });
+
+    res.status(200).json(purchases);
+  } catch (error) {
+    console.error("Error searching purchases:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
