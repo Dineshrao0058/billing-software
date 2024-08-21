@@ -23,7 +23,7 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     productStock: {
-      type: String,
+      type: Number, // Assuming stock should be a number
       required: true,
     },
     batchNumber: {
@@ -42,14 +42,12 @@ const productSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    createdBY: {
-      type: String,
-    },
+    createdBy: { type: String },
     createdDate: {
       type: Date,
       default: Date.now,
     },
-    updatedBY: {
+    updatedBy: {
       type: String,
     },
     updatedDate: {
@@ -76,7 +74,7 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    gstPrice: {
+    gstAmount: {
       type: Number,
       required: true,
     },
