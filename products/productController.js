@@ -3,7 +3,7 @@ const Product = require("./productModel");
 exports.createProduct = async (req, res) => {
   try {
     const productData = req.body;
-    if (!productData.productStatus) { 
+    if (!productData.productStatus) {
       productData.productStatus = "active";
     }
     const product = new Product(productData);
@@ -58,7 +58,9 @@ exports.searchProducts = async (req, res) => {
     const { keyword, category } = req.query;
 
     if (!keyword && !category) {
-      return res.status(400).json({ message: "Keyword or category is required" });
+      return res
+        .status(400)
+        .json({ message: "Keyword or category is required" });
     }
 
     const searchConditions = [];

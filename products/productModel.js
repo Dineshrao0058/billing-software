@@ -23,7 +23,7 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     productStock: {
-      type: Number, // Assuming stock should be a number
+      type: Number,
       required: true,
     },
     batchNumber: {
@@ -42,7 +42,9 @@ const productSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    createdBy: { type: String },
+    createdBy: {
+      type: String,
+    },
     createdDate: {
       type: Date,
       default: Date.now,
@@ -60,7 +62,6 @@ const productSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
     },
     salePercentage: {
       type: Number,

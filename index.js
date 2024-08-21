@@ -7,18 +7,22 @@ app.use(express.json());
 
 const cors = require("cors");
 app.use(cors());
+
 dotenv.config();
+
+
 const adminRoute = require("./Admin/adminRoutes");
 const managerRoute = require("./manager/managerRoute");
 const productRoute = require("./products/productRoute");
 const salesRoute = require("./sales/salesRoute");
 const purchaseRoute = require("./purchase/purchaseRoute");
+
 port = process.env.PORT;
 url = process.env.DB_URL;
 
 app.listen(port, (err) => {
   if (!err) {
-    console.log(`Server restarted on port ${port}`);
+    console.log(`Server running on port ${port}`);
   } else {
     console.log("Error in server connection");
   }
